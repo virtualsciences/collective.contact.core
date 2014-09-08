@@ -16,6 +16,7 @@
     </a>
   </div>
   <h1 class="fn" tal:content="view/name"></h1>
+  <h2 class="orgType" tal:content="view/type|nothing"></h2>
 
   <div id="photo" class="field" tal:condition="context/photo">
       <img tal:define="scales nocall:context/@@images"
