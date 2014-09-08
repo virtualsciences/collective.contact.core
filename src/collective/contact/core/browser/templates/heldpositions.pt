@@ -6,64 +6,81 @@
       tal:define="portal_url context/@@plone_portal_state/portal_url;"
       i18n:domain="collective.contact.core" tal:omit-tag="">
 
-    <div id="held_positions" class="field" tal:condition="view/held_positions">
-        <h2 i18n:translate="">Positions</h2>
-        <tal:block tal:repeat="held_position view/held_positions">
-            <div class="held_position vcard" tal:define="url held_position/object/absolute_url">
-
-              <div class="actions">
-                <a class="zoom-held-position contactoverlay" tal:attributes="href string:${url}/view">
-                  <img alt="View" title="View"
-                       i18n:domain="plone"
-                       tal:attributes="src string:${portal_url}/search_icon.png"
-                       i18n:attributes="alt; title" />
-                </a>
-                <a class="edit-held-position contactoverlay"
-                   tal:attributes="href string:${url}/edit"
-                   tal:condition="held_position/can_edit">
-                  <img alt="Edit" title="Edit"
-                       i18n:domain="plone"
-                       tal:attributes="src string:${portal_url}/edit.png"
-                       i18n:attributes="alt; title" />
-                </a>
-                <a class="delete-held-position deleteoverlay"
-                   tal:attributes="href string:${url}/delete_confirmation"
-                   tal:condition="held_position/can_delete">
-                  <img alt="Delete" title="Delete"
-                       i18n:domain="plone"
-                       tal:attributes="src string:${portal_url}/delete_icon.png"
-                       i18n:attributes="alt; title" />
-                </a>
-              </div>
-
-              <h3 tal:content="held_position/label" />
-
-              <div class="start_date" class="field" tal:condition="held_position/start_date">
-                <label><tal:block i18n:translate="">Start date</tal:block>:</label>
-                <span tal:replace="held_position/start_date" />
-              </div>
-
-              <div class="end_date" class="field" tal:condition="held_position/end_date">
-                <label><tal:block i18n:translate="">End date</tal:block>:</label>
-                <span tal:replace="held_position/end_date" />
-              </div>
-
-              <div tal:replace="structure held_position/object/@@nofallbackcontactdetails"></div>
-
-              <div class="organization vcard" tal:define="organization nocall:held_position/organization">
-                  <div class="logo" class="field" tal:condition="organization/logo">
-                      <img tal:define="scales nocall:organization/@@images"
-                           tal:replace="structure python:scales.tag('logo', 'tile', css_class='photo')"
-                           tal:on-error="string:Bad logo format" />
-                  </div>
-                  <h4><a tal:attributes="href organization/absolute_url" tal:content="organization/Title"></a></h4>
-
-                  <div tal:replace="structure held_position/organization/@@contactdetails"></div>
-              </div>
-            </div>
+    <metal:block tal:condition="view/held_positions">
+      <dd tal:repeat="held_position view/held_positions">
+        <tal:block tal:define="organization nocall:held_position/organization">
+          <a tal:attributes="href organization/absolute_url">
+            <metal:block tal:condition="organization/logo">
+              <img tal:define="scales nocall:organization/@@images"
+                  tal:replace="structure python:scales.tag('logo', width=64, height=64, css_class='profile', direction='down')"
+                  tal:on-error="string:Bad logo format" />
+            </metal:block>
+            <img tal:condition="not:organization/logo|nothing"
+                tal:attributes="src string:${context/portal_url}/photo-fallback-70.png" class="flle profile" width="64" height="64" />
+            <tal:text tal:replace="organization/Title"/>
+          </a>
         </tal:block>
-        <div class="visualClear"><!--  --></div>
-    </div>
+      </dd>
+    </metal:block>
+
+    <!--?<div id="held_positions" class="field" tal:condition="view/held_positions">-->
+        <!--?<h2 i18n:translate="">Positions</h2>-->
+        <!--?<tal:block tal:repeat="held_position view/held_positions">-->
+            <!--?<div class="held_position vcard" tal:define="url held_position/object/absolute_url">-->
+
+              <!--?<div class="actions">-->
+                <!--?<a class="zoom-held-position contactoverlay" tal:attributes="href string:${url}/view">-->
+                  <!--?<img alt="View" title="View"-->
+                       <!--?i18n:domain="plone"-->
+                       <!--?tal:attributes="src string:${portal_url}/search_icon.png"-->
+                       <!--?i18n:attributes="alt; title" />-->
+                <!--?</a>-->
+                <!--?<a class="edit-held-position contactoverlay"-->
+                   <!--?tal:attributes="href string:${url}/edit"-->
+                   <!--?tal:condition="held_position/can_edit">-->
+                  <!--?<img alt="Edit" title="Edit"-->
+                       <!--?i18n:domain="plone"-->
+                       <!--?tal:attributes="src string:${portal_url}/edit.png"-->
+                       <!--?i18n:attributes="alt; title" />-->
+                <!--?</a>-->
+                <!--?<a class="delete-held-position deleteoverlay"-->
+                   <!--?tal:attributes="href string:${url}/delete_confirmation"-->
+                   <!--?tal:condition="held_position/can_delete">-->
+                  <!--?<img alt="Delete" title="Delete"-->
+                       <!--?i18n:domain="plone"-->
+                       <!--?tal:attributes="src string:${portal_url}/delete_icon.png"-->
+                       <!--?i18n:attributes="alt; title" />-->
+                <!--?</a>-->
+              <!--?</div>-->
+
+              <!--?<h3 tal:content="held_position/label" />-->
+
+              <!--?<div class="start_date" class="field" tal:condition="held_position/start_date">-->
+                <!--?<label><tal:block i18n:translate="">Start date</tal:block>:</label>-->
+                <!--?<span tal:replace="held_position/start_date" />-->
+              <!--?</div>-->
+
+              <!--?<div class="end_date" class="field" tal:condition="held_position/end_date">-->
+                <!--?<label><tal:block i18n:translate="">End date</tal:block>:</label>-->
+                <!--?<span tal:replace="held_position/end_date" />-->
+              <!--?</div>-->
+
+              <!--?<div tal:replace="structure held_position/object/@@nofallbackcontactdetails"></div>-->
+
+              <!--?<div class="organization vcard" tal:define="organization nocall:held_position/organization">-->
+                  <!--?<div class="logo" class="field" tal:condition="organization/logo">-->
+                      <!--?<img tal:define="scales nocall:organization/@@images"-->
+                           <!--?tal:replace="structure python:scales.tag('logo', 'tile', css_class='photo')"-->
+                           <!--?tal:on-error="string:Bad logo format" />-->
+                  <!--?</div>-->
+                  <!--?<h4><a tal:attributes="href organization/absolute_url" tal:content="organization/Title"></a></h4>-->
+
+                  <!--?<div tal:replace="structure held_position/organization/@@contactdetails"></div>-->
+              <!--?</div>-->
+            <!--?</div>-->
+        <!--?</tal:block>-->
+        <!--?<div class="visualClear"><!--  --><!--?</div>-->
+    <!--?</div>-->
 
 
 </html>
