@@ -72,7 +72,8 @@
       <h2>About us</h2>
     </div>
 
-    <div tal:define="items python:context.portal_catalog(portal_type='News Item', sort_order='reverse', sort_on='Date');
+    <div tal:define="creator context/title_or_id;
+                     items python:context.portal_catalog(portal_type='News Item', sort_order='reverse', sort_on='Date', Creator=creator);
                      toLocalizedTime nocall:context/@@plone/toLocalizedTime;"
         class="companyNewsListing">
       <div class="listHeading">Company news</div>

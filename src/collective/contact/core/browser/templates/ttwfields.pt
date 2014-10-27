@@ -23,13 +23,14 @@
 
         <!--?</p>-->
 
-        <tal:block tal:define="widgets view/widgets;
-                               widget python:widgets[field];"
-                               tal:condition="widget/value">
+        <div tal:define="widgets view/widgets;
+                         widget python:widgets[field];"
+              tal:condition="widget/value"
+             tal:attributes="class widget/label">
           <tal:with-label tal:condition="widget/label">
             <h2 tal:content="widget/label"></h2>
           </tal:with-label>
           <div tal:on-error="nothing" tal:replace="structure widget/render"></div>
-        </tal:block>
+        </div>
     </tal:block>
 </div>
