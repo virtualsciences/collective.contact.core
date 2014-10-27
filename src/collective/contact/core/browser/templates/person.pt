@@ -12,9 +12,9 @@
     <div tal:replace="structure context/@@basefields" />
 
     <div tal:condition="view/show_contact_details"
-         tal:replace="structure context/@@contactdetails" />
+         tal:replace="structure context/@@contactdetails|nothing" />
 
-    <div tal:replace="structure context/@@ttwfields" />
+    <div tal:replace="structure context/@@ttwfields|nothing" />
 
     <metal:additional-fields use-macro="context/contact_core_macros/macros/additional-fields" />
 
