@@ -6,10 +6,13 @@
       tal:define="portal_url context/@@plone_portal_state/portal_url;"
       i18n:domain="collective.contact.core" tal:omit-tag="">
 
-    <metal:block tal:condition="view/held_positions">
+    <metal:block tal:condition="view/held_positions"
+                 tal:define="organizations python:[]">
       <dd tal:repeat="held_position view/held_positions">
-        <tal:block tal:define="organization nocall:held_position/organization">
-          <a tal:attributes="href organization/absolute_url">
+        <tal:block tal:define="organization nocall:held_position/organization"
+                   tal:condition="python:organization not in organizations">
+          <a tal:attributes="href organization/absolute_url"
+             tal:define="dummy python:organizations.append(organization)">
             <metal:block tal:condition="organization/logo">
               <img tal:define="scales nocall:organization/@@images"
                   tal:replace="structure python:scales.tag('logo', width=64, height=64, css_class='profile', direction='down')"
