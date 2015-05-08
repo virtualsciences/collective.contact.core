@@ -16,13 +16,19 @@
     </a>
   </div>
   <h1 class="fn" tal:content="view/name"></h1>
+  <h2 class="positions"
+      tal:define="positions view/positions|nothing"
+      tal:condition="positions"
+      tal:content="python:', '.join(positions)">
+    Positions
+  </h2>
   <h2 class="orgType" tal:content="view/type|nothing"></h2>
 
-  <!--?<div id="photo" class="field" tal:condition="context/photo">-->
-      <!--?<img tal:define="scales nocall:context/@@images"-->
-           <!--?tal:replace="structure python:scales.tag('photo', 'thumb', css_class='photo')"-->
-           <!--?tal:on-error="string:Bad photo format" />-->
-  <!--?</div>-->
+  <!--<div id="photo" class="field" tal:condition="context/photo">-->
+      <!--<img tal:define="scales nocall:context/@@images"-->
+           <!--tal:replace="structure python:scales.tag('photo', 'thumb', css_class='photo')"-->
+           <!--tal:on-error="string:Bad photo format" />-->
+  <!--</div>-->
 
   <div id="birthday" class="field" tal:condition="view/birthday">
       <label><tal:block i18n:translate="">Birthday</tal:block>:</label>

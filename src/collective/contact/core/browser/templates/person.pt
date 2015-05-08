@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	    xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-	    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="context/main_template/macros/master"
       tal:define="ajax_load request/ajax_load | nothing;"
       i18n:domain="collective.contact.core" lang="en">
@@ -17,8 +17,6 @@
     <div tal:replace="structure context/@@ttwfields|nothing" />
 
     <metal:additional-fields use-macro="context/contact_core_macros/macros/additional-fields" />
-
-    <!--?<div tal:replace="structure context/@@heldpositions" />-->
 
   </div>
 

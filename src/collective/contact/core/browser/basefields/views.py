@@ -11,7 +11,7 @@ from collective.contact.core.content.person import IPerson
 from collective.contact.core.content.organization import IOrganization
 from collective.contact.core.content.position import IPosition
 from collective.contact.core.content.held_position import IHeldPosition
-
+from collective.contact.core.interfaces import IPersonHeldPositions
 
 grok.templatedir('templates')
 
@@ -39,6 +39,24 @@ class PersonBaseFields(grok.View):
                 self.birthday = self.context.toLocalizedTime(birthday)
         else:
             self.birthday = ""
+
+        positions = {}
+        for obj in IPersonHeldPositions(person).get_sorted_positions():
+            position = obj.get_position()
+            if position is not None:
+                position = obj.get_position().Title()
+                if position in positions:
+                    positions[position].append(obj.label or obj.Title())
+                else:
+                    positions[position] = [obj.label or obj.Title()]
+
+        self.positions = []
+        for p in sorted(positions.keys()):
+            values = positions[p]
+            if len(values) > 1:
+                self.positions += values
+            else:
+                self.positions.append(p)
 
         self.person_title = person.person_title
         self.gender = person.gender or ''

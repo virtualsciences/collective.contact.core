@@ -12,35 +12,53 @@
 </head>
 <body>
 
-<div metal:fill-slot="main">
+<div metal:fill-slot="main"
+     tal:define="organizations view/organizations;
+                 persons view/persons;">
     <h1 tal:content="context/Title"></h1>
 
-    <div id="organizations" tal:condition="view/organizations">
-        <h2><tal:block i18n:translate="">Organizations</tal:block>:</h2>
-        <ul>
-        <tal:block tal:repeat="organization view/organizations">
-            <li><a tal:attributes="href organization/getURL">
-                <img tal:attributes="src organization/getIcon" />
-                <span tal:replace="organization/Title"
-                      i18n:translate="" />
-            </a></li>
+    <div id="organizations" class="image-overview" 
+         tal:condition="organizations">
+      <h2 tal:condition="persons"><tal:block i18n:translate="">Organizations</tal:block>:</h2>
+      <ul class="visualNoMarker">
+        <tal:block tal:repeat="organization organizations">
+          <li class="organization"
+              tal:define="obj organization/getObject;
+                          logo obj/logo|nothing">
+            <a tal:define="scales nocall:obj/@@images;
+                           preview python:scales.scale('logo', 'thumb') if logo else {'url': ''};
+                           image_src preview/url;
+                           title obj/title;"
+               tal:attributes="href organization/getURL;
+                               style string:background: url('${image_src}') 50% 20% no-repeat;">
+              <strong tal:content="title">title</strong>
+            </a>
+          </li>
         </tal:block>
-        </ul>
+      </ul>
     </div>
 
-    <div id="persons" tal:condition="view/persons">
-        <h2><tal:block i18n:translate="">Persons</tal:block>:</h2>
-        <ul>
-        <tal:block tal:repeat="person view/persons">
-            <li><a tal:attributes="href person/getURL">
-                <img tal:attributes="src person/getIcon" />
-                <span tal:replace="person/Title"
-                      i18n:translate="" />
-            </a></li>
+    <div id="persons" class="image-overview" 
+         tal:condition="persons">
+      <h2 tal:condition="organizations"><tal:block i18n:translate="">Persons</tal:block>:</h2>
+      <ul class="visualNoMarker">
+        <tal:block tal:repeat="person persons">
+          <li class="person"
+              tal:define="obj person/getObject;
+                          photo obj/photo|nothing">
+            <a tal:define="scales nocall:obj/@@images;
+                           preview python:scales.scale('photo', 'thumb') if photo else {'url': ''};
+                           image_src preview/url;
+                           title obj/title;"
+               tal:attributes="href person/getURL;
+                               style string:background: url('${image_src}') 50% 50% / cover no-repeat;">
+              <strong tal:content="title">title</strong>
+            </a>
+          </li>
         </tal:block>
-        </ul>
+      </ul>
     </div>
-
+    <div class="visualClear"><!--   --></div>
 </div>
 
 </body>
