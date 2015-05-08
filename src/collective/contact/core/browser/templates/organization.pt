@@ -68,8 +68,10 @@
 
     <!--?<div tal:replace="structure context/@@othercontacts" />-->
 
-    <div>
+    <div tal:define="activity context/activity/output|nothing"
+         tal:condition="activity">
       <h2>About us</h2>
+      <div tal:replace="structure activity" />
     </div>
 
     <div tal:define="creator context/title_or_id;
