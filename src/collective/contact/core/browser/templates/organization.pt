@@ -68,9 +68,13 @@
 
     <!--?<div tal:replace="structure context/@@othercontacts" />-->
 
-    <div tal:define="activity context/activity/output|nothing"
-         tal:condition="activity">
+    <div tal:define="activity context/activity/output|nothing;
+                     description context/description|nothing"
+         tal:condition="python:activity or description">
       <h2>About us</h2>
+      <p class="documentDescription" 
+         tal:content="description"
+         tal:condition="description"/>
       <div tal:replace="structure activity" />
     </div>
 
