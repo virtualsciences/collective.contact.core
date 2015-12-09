@@ -26,7 +26,7 @@
               tal:define="obj organization/getObject;
                           logo obj/logo|nothing">
             <a tal:define="scales nocall:obj/@@images;
-                           preview python:scales.scale('logo', 'thumb') if logo else {'url': ''};
+                           preview python:scales.scale('logo', 'thumb') if logo else {'url': 'photo-fallback-258.png'};
                            image_src preview/url;
                            title obj/title;"
                tal:attributes="href organization/getURL;
@@ -47,7 +47,7 @@
               tal:define="obj person/getObject;
                           photo obj/photo|nothing">
             <a tal:define="scales nocall:obj/@@images;
-                           preview python:scales.scale('photo', 'thumb') if photo else {'url': ''};
+                           preview python:scales.scale('photo', 'thumb') if photo else {'url': 'photo-fallback-258.png'};
                            image_src preview/url;
                            title obj/title;"
                tal:attributes="href person/getURL;
